@@ -9,14 +9,23 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Clase InicioSesion es una especializacion de EstructuraPanel
+ */
 public class InicioSesion extends EstructuraPanel{
 	private static final long serialVersionUID = 1L;
-
+	
+	/**
+	 * Constructor de la clase InicioSesion
+	 */
 	public InicioSesion() {
 		super();
 		cargarContenido();
 	}
-
+	
+	/**
+	 * Metodo que introduce el contenido en el panel principal
+	 */
 	private void cargarContenido() {
 		JLabel usuario = new JLabel("Usuario:");
 		usuario.setBounds(120, 180, 70, 20);
@@ -41,6 +50,16 @@ public class InicioSesion extends EstructuraPanel{
 		JButton entrar = new JButton("Entrar");
 		entrar.setBounds(215, 300, 90, 25);
 		add(entrar);
+//		entrar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				EstadoSesion.sesion.setEstado(true);
+//				JOptionPane.showMessageDialog(null, "Se ha iniciado correctamente");
+//				ControlPaneles control = new ControlPaneles() {
+//				};
+//				Menu menu = new Menu();
+//				control.cambiarPagina(panelActual, menu);
+//			}
+//		});
 		
 		JLabel registro = new JLabel("¿No tienes cuenta? Registrate aqui");
 		registro.setBounds(90, 360, 266, 25);
@@ -50,12 +69,12 @@ public class InicioSesion extends EstructuraPanel{
 		JButton registrarse = new JButton("Registrarse");
 		registrarse.setBounds(180, 400, 100, 25);
 		add(registrarse);
-		InicioSesion inicio = this;
 		registrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlPaneles control = new ControlPaneles() {};
-				Menu principal = new Menu();
-				control.cambiarPagina(inicio, principal);
+				ControlPaneles control = new ControlPaneles() {
+				};
+				Registrarse registro = new Registrarse();
+				control.cambiarPagina(panelActual, registro);
 			}
 		});
 	}
