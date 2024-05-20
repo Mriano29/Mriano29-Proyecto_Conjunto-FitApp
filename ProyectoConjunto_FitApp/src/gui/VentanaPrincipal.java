@@ -18,7 +18,5 @@ public class VentanaPrincipal extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("FitApp");
-		InicioSesion inicio = new InicioSesion();
-		this.add(inicio);
 	}
 }

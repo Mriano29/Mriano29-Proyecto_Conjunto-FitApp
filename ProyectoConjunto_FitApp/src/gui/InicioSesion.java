@@ -48,11 +48,14 @@ public class InicioSesion extends EstructuraPanel{
 		add(registro);
 		
 		JButton registrarse = new JButton("Registrarse");
-		registrarse.setBounds(180, 400, 90, 25);
+		registrarse.setBounds(180, 400, 100, 25);
 		add(registrarse);
+		InicioSesion inicio = this;
 		registrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				ControlPaneles control = new ControlPaneles() {};
+				Menu principal = new Menu();
+				control.cambiarPagina(inicio, principal);
 			}
 		});
 	}
