@@ -1,15 +1,26 @@
 package gui;
 
+/**
+ * Clase EstadoSesion indica si un usuario ha iniciado sesion o no a la interfaz
+ */
 public class EstadoSesion {
-	protected static EstadoSesion sesion;
-	private boolean estado = false;
+	protected static boolean estadoSesion = false;
 
-	public boolean isEstado() {
-		return estado;
+	/**
+	 * Metodo que retorna el estado de la sesion de un usuario
+	 * 
+	 * @return true si ha iniciado, false en caso contrario
+	 */
+	public static boolean isEstado() {
+		return estadoSesion;
 	}
 
-	public void setEstado(boolean estado) {
-		this.estado = estado;
+	/**
+	 * Metodo que cambia el estado de la sesion de un usuario
+	 * 
+	 * @param estado el nuevo estado de la sesión
+	 */
+	public static void setEstado(boolean estado) {
+		estadoSesion = estado;
 	}
-	
 }

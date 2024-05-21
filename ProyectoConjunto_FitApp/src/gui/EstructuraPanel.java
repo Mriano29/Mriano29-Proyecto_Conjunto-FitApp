@@ -26,7 +26,7 @@ public class EstructuraPanel extends JPanel {
 		footer = new JPanel();
 		footer.setLayout(null);
 		footer.setBounds(0, 600, 500, 100);
-		Color color = new Color(247, 238, 221);
+		Color color = new Color(50, 141, 218);
 		footer.setBackground(color);
 		add(footer);
 	}

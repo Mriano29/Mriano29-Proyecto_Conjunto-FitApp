@@ -1,0 +1,2 @@
+SELECT usuario FROM usuarios;
+SELECT usuario, contraseña FROM usuarios;
