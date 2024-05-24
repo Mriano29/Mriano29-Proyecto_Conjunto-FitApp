@@ -75,4 +75,11 @@ public class Ejercicio {
 	public void setMusculo(String musculo) {
 		this.musculo = musculo;
 	}
+
+	@Override
+	public String toString() {
+		return "Ejercicio: " + this.nombre + " - Sección del músculo: " + this.seccion + " - Musculo: " + this.musculo;
+	}
+	
+	
 }

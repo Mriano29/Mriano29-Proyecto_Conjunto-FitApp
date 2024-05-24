@@ -6,8 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import modelo.Gestor;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 /**
@@ -59,7 +64,7 @@ public class InicioSesion extends EstructuraPanel {
 		JButton registrarse = new JButton("Registrarse");
 		registrarse.setBounds(180, 400, 100, 25);
 		add(registrarse);
-		
+
 		registrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControlPaneles control = new ControlPaneles() {
@@ -99,12 +104,37 @@ public class InicioSesion extends EstructuraPanel {
 		add(entrar);
 		entrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EstadoSesion.setEstado(true);
-				JOptionPane.showMessageDialog(null, "Se ha iniciado correctamente");
-				ControlPaneles control = new ControlPaneles() {
-				};
-				Menu menu = new Menu();
-				control.cambiarPagina(panelActual, menu);
+				String usuario = campoUsuario.getText().strip();
+				char[] vectorClave = campoContraseña.getPassword();
+				String clave = new String(vectorClave);
+				try {
+					if (usuario.isBlank() || clave.isBlank()) {
+						throw new IllegalArgumentException("No pueden haber campos vacíos");
+					} else if (usuario.length() > 20 || clave.length() > 20) {
+						throw new IllegalArgumentException("Los campos deben ser de menos de 20 caracteres");
+					} else {
+						Gestor gestor = new Gestor() {
+						};
+						if (gestor.comprobarUsuarioConClave(usuario, clave)) {
+							JOptionPane.showMessageDialog(null, "Bienvenido " + usuario + "!");
+							gestor.desconectar();
+							EstadoSesion.setEstado(true);
+							ControlPaneles control = new ControlPaneles() {
+							};
+							Menu menu = new Menu();
+							control.cambiarPagina(panelActual, menu);
+						} else {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error, inténtelo de nuevo");
+						}
+						gestor.desconectar();
+					}
+				} catch (IllegalArgumentException a) {
+					JOptionPane.showMessageDialog(null, a.getMessage());
+				} catch (SQLException b) {
+					b.printStackTrace();
+				} catch (IOException c) {
+					c.printStackTrace();
+				}
 			}
 		});
 	}

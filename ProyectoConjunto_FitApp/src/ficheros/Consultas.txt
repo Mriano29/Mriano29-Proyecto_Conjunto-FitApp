@@ -1,2 +1,3 @@
 SELECT usuario FROM usuarios;
 SELECT usuario, contraseña FROM usuarios;
+SELECT ejercicios.nombre AS nombre_ejercicio, secciones.nombre AS nombre_seccion, musculos.nombre AS nombre_musculo from ejercicios JOIN secciones ON ejercicios.seccion = secciones.id JOIN musculos ON secciones.musculo = musculos.id;

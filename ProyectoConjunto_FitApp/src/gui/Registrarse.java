@@ -26,7 +26,10 @@ public class Registrarse extends EstructuraPanel {
 		cargarContenido();
 		contenidoFooter();
 	}
-
+	
+	/**
+	 * Metodo que carga el contenido principal de la aplicacion
+	 */
 	private void cargarContenido() {
 		JLabel nombre = new JLabel("Nombre:");
 		nombre.setBounds(120, 180, 70, 20);
@@ -71,6 +74,9 @@ public class Registrarse extends EstructuraPanel {
 		cargarBotonEntrar();
 	}
 
+	/**
+	 * Metodo que carga el contenido en el footer
+	 */
 	private void contenidoFooter() {
 		JButton atras = new JButton("Volver");
 		atras.setBounds(10, 20, 90, 25);
@@ -85,6 +91,9 @@ public class Registrarse extends EstructuraPanel {
 		});
 	}
 
+	/**
+	 * Metodo que carga las funcionalidades del boton entrar
+	 */
 	private void cargarBotonEntrar() {
 		JButton entrar = new JButton("Entrar");
 		entrar.setBounds(215, 400, 90, 25);
@@ -100,6 +109,8 @@ public class Registrarse extends EstructuraPanel {
 					String confirmacion = new String(vectorConfirmacion);
 					if (nombre.isBlank() || usuario.isBlank() || clave.isBlank() || confirmacion.isBlank()) {
 						throw new IllegalArgumentException();
+					} else if (nombre.length() > 20 || usuario.length() > 20 || clave.length() > 20) {
+						JOptionPane.showMessageDialog(null, "Los campos deben tener 20 caracteres o menos.");
 					} else {
 						if (!clave.equals(confirmacion)) {
 							throw new Exception();
@@ -109,7 +120,18 @@ public class Registrarse extends EstructuraPanel {
 								if (gestor.comprobarUsuario(usuario)) {
 									JOptionPane.showMessageDialog(null, "El nombre de usuario no está disponible");
 								} else {
-									JOptionPane.showMessageDialog(null, "eskereeeeee");
+									if (gestor.insertarUsuario(nombre, usuario, clave)) {
+										JOptionPane.showMessageDialog(null, "Se ha registrado con éxito!");
+										gestor.desconectar();
+										EstadoSesion.setEstado(true);
+										ControlPaneles control = new ControlPaneles() {
+										};
+										Menu menu = new Menu();
+										control.cambiarPagina(panelActual, menu);
+									} else {
+										JOptionPane.showMessageDialog(null,
+												"Se ha producido un error, inténtelo de nuevo");
+									}
 								}
 								gestor.desconectar();
 							} catch (IOException e1) {

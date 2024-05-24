@@ -48,12 +48,12 @@ public class Menu extends EstructuraPanel {
 		add(gestionarDatos);
 		gestionarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(EstadoSesion.isEstado()) {
+				if (EstadoSesion.isEstado()) {
 					ControlPaneles control = new ControlPaneles() {
 					};
 					GestionarDatos datos = new GestionarDatos();
 					control.cambiarPagina(panelActual, datos);
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Debes iniciar sesion para usar esta función");
 				}
 			}
@@ -69,12 +69,12 @@ public class Menu extends EstructuraPanel {
 		add(gestionarRutinas);
 		gestionarRutinas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(EstadoSesion.isEstado()) {
+				if (EstadoSesion.isEstado()) {
 					ControlPaneles control = new ControlPaneles() {
 					};
 					GestionarRutinas rutinas = new GestionarRutinas();
 					control.cambiarPagina(panelActual, rutinas);
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Debes iniciar sesion para usar esta función");
 				}
 			}
@@ -104,7 +104,7 @@ public class Menu extends EstructuraPanel {
 	private void cargarContenidoHeader() {
 		cargarBotonInicioSesion();
 	}
-	
+
 	/**
 	 * Carga el boton de inicio de sesion
 	 */
@@ -125,7 +125,7 @@ public class Menu extends EstructuraPanel {
 				};
 				if (sesion.getText().equals("Cerrar sesión")) {
 					EstadoSesion.setEstado(false);
-					control.cambiarPagina(panelActual, panelActual);
+					sesion.setText("Iniciar sesión");
 				} else {
 					InicioSesion inicioSesion = new InicioSesion();
 					control.cambiarPagina(panelActual, inicioSesion);
