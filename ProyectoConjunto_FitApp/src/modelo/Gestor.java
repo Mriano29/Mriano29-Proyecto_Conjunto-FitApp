@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,20 +15,31 @@ import java.util.ArrayList;
  * Clase que gestiona la conexion con la BDD
  */
 public class Gestor {
-	private final String url = "jdbc:mysql://localhost:3306/ejercicios";
-	private final String usuario = "root";
-	private final String contraseña = "";
+	private String url;
+	private String usuario;
+	private String contraseña;
 	private Connection conexion;
 	private Statement consulta;
 
 	public Gestor() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			FileReader fr = new FileReader("./src/ficheros/DatosBD.txt");
+			BufferedReader br = new BufferedReader(fr);
+			this.url = br.readLine();
+			this.usuario = br.readLine();
+			this.contraseña = "";
 			this.conexion = DriverManager.getConnection(url, usuario, contraseña);
 			this.consulta = conexion.createStatement();
+			br.close();
+			fr.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -203,11 +215,11 @@ public class Gestor {
 	/**
 	 * Metodo que cambia el nombre de un usuario
 	 * 
-	 * @param usuario el usuario a cambiar
+	 * @param usuario     el usuario a cambiar
 	 * @param nuevoNombre el nombre nuevo
 	 * @return true si se cambio correctamente, false en caso contrario
 	 */
-	public boolean cambiarNombre(String usuario, String nuevoNombre) throws IOException{
+	public boolean cambiarNombre(String usuario, String nuevoNombre) throws IOException {
 		FileReader fr = new FileReader("./src/ficheros/Updates.txt");
 		BufferedReader br = new BufferedReader(fr);
 		String[] linea = br.readLine().split(",");
@@ -224,15 +236,15 @@ public class Gestor {
 		fr.close();
 		return false;
 	}
-	
+
 	/**
 	 * Metodo que cambia el nombre de usuario de un usuario
 	 * 
-	 * @param usuario el usuario a cambiar
+	 * @param usuario      el usuario a cambiar
 	 * @param nuevoUsuario el usuario nuevo
 	 * @return true si se cambio correctamente, false en caso contrario
 	 */
-	public boolean cambiarUsuario(String usuario, String nuevoUsuario) throws IOException{
+	public boolean cambiarUsuario(String usuario, String nuevoUsuario) throws IOException {
 		FileReader fr = new FileReader("./src/ficheros/Updates.txt");
 		BufferedReader br = new BufferedReader(fr);
 		br.readLine();
@@ -250,15 +262,15 @@ public class Gestor {
 		fr.close();
 		return false;
 	}
-	
+
 	/**
 	 * Metodo que cambia la contraseña de un usuario
 	 * 
-	 * @param usuario el usuario a cambiar
+	 * @param usuario    el usuario a cambiar
 	 * @param nuevaClave la nueva contraseña
 	 * @return true si se cambio correctamente, false en caso contrario
 	 */
-	public boolean cambiarContraseña(String usuario, String nuevaClave) throws IOException{
+	public boolean cambiarContraseña(String usuario, String nuevaClave) throws IOException {
 		FileReader fr = new FileReader("./src/ficheros/Updates.txt");
 		BufferedReader br = new BufferedReader(fr);
 		br.readLine();
