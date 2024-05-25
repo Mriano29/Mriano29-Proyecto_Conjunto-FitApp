@@ -88,7 +88,6 @@ public class Gestor {
 		String[] insert = linea.split(",");
 		String sentenciaInsercion = insert[0] + "NULL," + "'" + nombre + "'," + "'" + usuario + "'," + "'" + contraseña
 				+ "'" + insert[1];
-		System.out.println(sentenciaInsercion);
 		try {
 			boolean comprobacion = consulta.execute(sentenciaInsercion);
 			if (comprobacion) {
@@ -135,6 +134,12 @@ public class Gestor {
 		return false;
 	}
 
+	/**
+	 * Metodo que retorna todos los ejercicios en la base de datos
+	 * 
+	 * @return una lista con los ejercicios en la base de datos
+	 * @throws IOException
+	 */
 	public ArrayList<Ejercicio> obtenerEjercicios() throws IOException {
 		FileReader fr = new FileReader("./src/ficheros/Consultas.txt");
 		BufferedReader br = new BufferedReader(fr);
@@ -157,5 +162,119 @@ public class Gestor {
 		br.close();
 		fr.close();
 		return resultado;
+	}
+
+	/**
+	 * * Metodo que retorna un usuario en especifico de la base de datos mediante su
+	 * nombre de usuario
+	 * 
+	 * @param usuario el nombre de usuario
+	 * @return el usuario buscado
+	 * @throws IOException
+	 * 
+	 */
+	public Usuario_registrado seleccionarUsuario(String usuario) throws IOException {
+		FileReader fr = new FileReader("./src/ficheros/Consultas.txt");
+		BufferedReader br = new BufferedReader(fr);
+		for (int i = 0; i < 3; i++) {
+			br.readLine();
+		}
+		String linea = br.readLine();
+		String[] insert = linea.split("#");
+		String sentencia = insert[0] + usuario + insert[1];
+		try {
+			ResultSet datosUsuario = consulta.executeQuery(sentencia);
+			if (datosUsuario.next()) {
+				String nombre = datosUsuario.getString("nombre");
+				String contraseña = datosUsuario.getString("contraseña");
+				Usuario_registrado resultado = new Usuario_registrado(nombre, usuario, contraseña);
+				br.close();
+				fr.close();
+				return resultado;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return null;
+	}
+
+	/**
+	 * Metodo que cambia el nombre de un usuario
+	 * 
+	 * @param usuario el usuario a cambiar
+	 * @param nuevoNombre el nombre nuevo
+	 * @return true si se cambio correctamente, false en caso contrario
+	 */
+	public boolean cambiarNombre(String usuario, String nuevoNombre) throws IOException{
+		FileReader fr = new FileReader("./src/ficheros/Updates.txt");
+		BufferedReader br = new BufferedReader(fr);
+		String[] linea = br.readLine().split(",");
+		String act = linea[0] + nuevoNombre + linea[1] + usuario + linea[2];
+		try {
+			consulta.executeUpdate(act);
+			br.close();
+			fr.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return false;
+	}
+	
+	/**
+	 * Metodo que cambia el nombre de usuario de un usuario
+	 * 
+	 * @param usuario el usuario a cambiar
+	 * @param nuevoUsuario el usuario nuevo
+	 * @return true si se cambio correctamente, false en caso contrario
+	 */
+	public boolean cambiarUsuario(String usuario, String nuevoUsuario) throws IOException{
+		FileReader fr = new FileReader("./src/ficheros/Updates.txt");
+		BufferedReader br = new BufferedReader(fr);
+		br.readLine();
+		String[] linea = br.readLine().split(",");
+		String act = linea[0] + nuevoUsuario + linea[1] + usuario + linea[2];
+		try {
+			consulta.executeUpdate(act);
+			br.close();
+			fr.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return false;
+	}
+	
+	/**
+	 * Metodo que cambia la contraseña de un usuario
+	 * 
+	 * @param usuario el usuario a cambiar
+	 * @param nuevaClave la nueva contraseña
+	 * @return true si se cambio correctamente, false en caso contrario
+	 */
+	public boolean cambiarContraseña(String usuario, String nuevaClave) throws IOException{
+		FileReader fr = new FileReader("./src/ficheros/Updates.txt");
+		BufferedReader br = new BufferedReader(fr);
+		br.readLine();
+		br.readLine();
+		String[] linea = br.readLine().split(",");
+		String act = linea[0] + nuevaClave + linea[1] + usuario + linea[2];
+		try {
+			consulta.executeUpdate(act);
+			br.close();
+			fr.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return false;
 	}
 }

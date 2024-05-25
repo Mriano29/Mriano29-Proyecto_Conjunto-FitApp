@@ -37,7 +37,10 @@ public class InicioSesion extends EstructuraPanel {
 		cargarContenidoRegistro();
 		contenidoFooter();
 	}
-
+	
+	/**
+	 * Metodo que carga el contenido del footer
+	 */
 	private void contenidoFooter() {
 		JButton atras = new JButton("Volver");
 		atras.setBounds(10, 20, 90, 25);
@@ -117,12 +120,13 @@ public class InicioSesion extends EstructuraPanel {
 						};
 						if (gestor.comprobarUsuarioConClave(usuario, clave)) {
 							JOptionPane.showMessageDialog(null, "Bienvenido " + usuario + "!");
-							gestor.desconectar();
+							EstadoSesion.setUsuario_activo(gestor.seleccionarUsuario(usuario));
 							EstadoSesion.setEstado(true);
 							ControlPaneles control = new ControlPaneles() {
 							};
 							Menu menu = new Menu();
 							control.cambiarPagina(panelActual, menu);
+							gestor.desconectar();
 						} else {
 							JOptionPane.showMessageDialog(null, "Se ha producido un error, inténtelo de nuevo");
 						}

@@ -1,0 +1,3 @@
+UPDATE usuarios SET nombre = ',' WHERE usuario LIKE ',';
+UPDATE usuarios SET usuario = ',' WHERE usuario LIKE ',';
+UPDATE usuarios SET contraseña = ',' WHERE usuario LIKE ',';

@@ -9,7 +9,6 @@ public class Usuario_registrado {
 	private String nombre;
 	private String usuario;
 	private String contraseña;
-	private ArrayList<Rutina> rutinas;
 
 	/**
 	 * Constructor de la clase Usuario_registrado
@@ -19,11 +18,10 @@ public class Usuario_registrado {
 	 * @param contraseña la contraseña de acceso del usuario
 	 * @param rutinas    las rutinas del usuario
 	 */
-	public Usuario_registrado(String nombre, String usuario, String contraseña, ArrayList<Rutina> rutinas) {
+	public Usuario_registrado(String nombre, String usuario, String contraseña) {
 		this.nombre = nombre;
 		this.usuario = usuario;
 		this.contraseña = contraseña;
-		this.rutinas = rutinas;
 	}
 
 	/**
@@ -80,41 +78,6 @@ public class Usuario_registrado {
 		this.contraseña = contraseña;
 	}
 
-	/**
-	 * Obtiene las rutinas del usuario.
-	 * 
-	 * @return una lista con las rutinas del usuario
-	 */
-	public ArrayList<Rutina> getRutinas() {
-		return rutinas;
-	}
-
-	/**
-	 * Establece las rutinas del usuario.
-	 * 
-	 * @param rutinas una lista con las rutinas del usuario
-	 */
-	public void setRutinas(ArrayList<Rutina> rutinas) {
-		this.rutinas = rutinas;
-	}
-
-	/**
-	 * Crea una nueva rutina vacía y la añade a la lista de rutinas del usuario.
-	 */
-	public void crearRutina() {
-		ArrayList<Ejercicio> lista_ejercicios_vacia = new ArrayList<Ejercicio>();
-		Rutina nueva_rutina = new Rutina(lista_ejercicios_vacia);
-		rutinas.add(nueva_rutina);
-	}
-
-	/**
-	 * Elimina una rutina específica de la lista de rutinas del usuario.
-	 * 
-	 * @param rutina_eliminar la rutina a eliminar
-	 */
-	public void eliminarRutina(Rutina rutina_eliminar) {
-		rutinas.remove(rutina_eliminar);
-	}
 
 	/**
 	 * Obtiene la lista de ejercicios de una rutina específica.

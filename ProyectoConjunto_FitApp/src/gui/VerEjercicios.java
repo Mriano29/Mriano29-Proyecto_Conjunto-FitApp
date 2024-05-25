@@ -3,6 +3,7 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -10,7 +11,6 @@ import javax.swing.JButton;
 import modelo.Ejercicio;
 import modelo.Gestor;
 import java.awt.List;
-import javax.swing.JComboBox;
 
 public class VerEjercicios extends EstructuraPanel {
 
@@ -33,15 +33,11 @@ public class VerEjercicios extends EstructuraPanel {
 			for (int i = 0; i < ejercicios.size(); i++) {
 				listaEjercicios.add(ejercicios.get(i).toString());
 			}
-			JComboBox<String> comboBox = new JComboBox<String>();
-			comboBox.setBounds(360, 428, 110, 20);
-			add(comboBox);
-			
-			JButton btnNewButton = new JButton("New button");
-			btnNewButton.setBounds(360, 458, 110, 21);
-			add(btnNewButton);
+			gestor.desconectar();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (SQLException a) {
+			a.printStackTrace();
 		}
 	}
 
