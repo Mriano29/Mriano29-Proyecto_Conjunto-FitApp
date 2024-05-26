@@ -289,4 +289,28 @@ public class Gestor {
 		fr.close();
 		return false;
 	}
+
+	public ArrayList<Integer> rutinas(String usuario) throws IOException {
+		FileReader fr = new FileReader("./src/ficheros/Consultas.txt");
+		BufferedReader br = new BufferedReader(fr);
+		ArrayList<Integer> rutinas = new ArrayList<Integer>();
+		br.readLine();
+		br.readLine();
+		br.readLine();
+		br.readLine();
+		String[] linea = br.readLine().split(",");
+		String sentencia = linea[0] + usuario + linea[1];
+		try {
+			ResultSet datosRutina = consulta.executeQuery(sentencia);
+			if (datosRutina.next()) {
+				int idRutina = datosRutina.getInt("id_rutina");
+				rutinas.add(idRutina);
+				br.close();
+				fr.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rutinas;
+	}
 }
