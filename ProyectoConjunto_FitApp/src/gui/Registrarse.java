@@ -122,12 +122,13 @@ public class Registrarse extends EstructuraPanel {
 								} else {
 									if (gestor.insertarUsuario(nombre, usuario, clave)) {
 										JOptionPane.showMessageDialog(null, "Se ha registrado con éxito!");
-										gestor.desconectar();
+										EstadoSesion.setUsuario_activo(gestor.seleccionarUsuario(usuario));
 										EstadoSesion.setEstado(true);
 										ControlPaneles control = new ControlPaneles() {
 										};
 										Menu menu = new Menu();
 										control.cambiarPagina(panelActual, menu);
+										gestor.desconectar();
 									} else {
 										JOptionPane.showMessageDialog(null,
 												"Se ha producido un error, inténtelo de nuevo");

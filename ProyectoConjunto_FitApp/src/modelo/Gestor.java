@@ -199,7 +199,7 @@ public class Gestor {
 			if (datosUsuario.next()) {
 				String nombre = datosUsuario.getString("nombre");
 				String contraseña = datosUsuario.getString("contraseña");
-				Usuario_registrado resultado = new Usuario_registrado(nombre, usuario, contraseña);
+				Usuario_registrado resultado = new Usuario_registrado(nombre, usuario, contraseña, rutinas(usuario));
 				br.close();
 				fr.close();
 				return resultado;
@@ -290,10 +290,18 @@ public class Gestor {
 		return false;
 	}
 
-	public ArrayList<Integer> rutinas(String usuario) throws IOException {
+	/**
+	 * Metodo que retorna las rutinas de un usuario dado
+	 * 
+	 * @param usuario el usuario cuyas rutinas se van a comprobar
+	 * @return una lista con las rutinas del usuario.
+	 * @throws IOException
+	 */
+	public ArrayList<Rutina> rutinas(String usuario) throws IOException {
 		FileReader fr = new FileReader("./src/ficheros/Consultas.txt");
 		BufferedReader br = new BufferedReader(fr);
-		ArrayList<Integer> rutinas = new ArrayList<Integer>();
+		ArrayList<Rutina> rutinas = new ArrayList<Rutina>();
+		br.readLine();
 		br.readLine();
 		br.readLine();
 		br.readLine();
@@ -301,16 +309,54 @@ public class Gestor {
 		String[] linea = br.readLine().split(",");
 		String sentencia = linea[0] + usuario + linea[1];
 		try {
-			ResultSet datosRutina = consulta.executeQuery(sentencia);
-			if (datosRutina.next()) {
-				int idRutina = datosRutina.getInt("id_rutina");
-				rutinas.add(idRutina);
-				br.close();
-				fr.close();
+			Statement consulta1 = conexion.createStatement();
+			ResultSet datosRutina = consulta1.executeQuery(sentencia);
+			while (datosRutina.next()) {
+				int idRutina = datosRutina.getInt("id");
+				Rutina rutina_nueva = new Rutina(ejercicios(idRutina));
+				rutinas.add(rutina_nueva);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		br.close();
+		fr.close();
 		return rutinas;
+	}
+
+	/**
+	 * Metodo que retorna una lista con los ejercicios de una rutina pasada por
+	 * parametro
+	 * 
+	 * @param id la rutina a buscar
+	 * @return una lista con los ejercicios de la rutina pasada
+	 * @throws IOException
+	 */
+	public ArrayList<Ejercicio> ejercicios(int id) throws IOException {
+		ArrayList<Ejercicio> resultado = new ArrayList<Ejercicio>();
+		FileReader fr = new FileReader("./src/ficheros/Consultas.txt");
+		BufferedReader br = new BufferedReader(fr);
+		br.readLine();
+		br.readLine();
+		br.readLine();
+		br.readLine();
+		String[] linea = br.readLine().split("#");
+		String consulta_ejercicios = linea[0] + id + linea[1];
+		try {
+			Statement consulta2 = conexion.createStatement();
+			ResultSet ejercicios_rutina = consulta2.executeQuery(consulta_ejercicios);
+			while (ejercicios_rutina.next()) {
+				String nombre = ejercicios_rutina.getString("nombre_ejercicio");
+				String seccion = ejercicios_rutina.getString("nombre_seccion");
+				String musculo = ejercicios_rutina.getString("nombre_musculo");
+				Ejercicio ejercicio_nuevo = new Ejercicio(nombre, seccion, musculo);
+				resultado.add(ejercicio_nuevo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return resultado;
 	}
 }

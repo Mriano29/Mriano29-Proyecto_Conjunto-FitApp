@@ -126,7 +126,6 @@ public class InicioSesion extends EstructuraPanel {
 							};
 							Menu menu = new Menu();
 							control.cambiarPagina(panelActual, menu);
-							gestor.desconectar();
 						} else {
 							JOptionPane.showMessageDialog(null, "Se ha producido un error, inténtelo de nuevo");
 						}

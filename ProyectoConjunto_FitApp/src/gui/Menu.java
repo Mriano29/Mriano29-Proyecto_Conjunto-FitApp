@@ -2,7 +2,11 @@ package gui;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+
+import modelo.Rutina;
+
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 /**
@@ -70,10 +74,17 @@ public class Menu extends EstructuraPanel {
 		gestionarRutinas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (EstadoSesion.isEstado()) {
-					ControlPaneles control = new ControlPaneles() {
-					};
-					GestionarRutinas rutinas = new GestionarRutinas();
-					control.cambiarPagina(panelActual, rutinas);
+					/*
+					 * ControlPaneles control = new ControlPaneles() { }; GestionarRutinas rutinas =
+					 * new GestionarRutinas(); control.cambiarPagina(panelActual, rutinas);
+					 */
+					ArrayList<Rutina> rutinas = new ArrayList<Rutina>();
+					rutinas = EstadoSesion.getUsuario_activo().getRutinas();
+					for (int i = 0; i < rutinas.size(); i++) {
+						for (int j = 0; j < rutinas.get(i).getEjercicios().size(); j++) {
+							System.out.println(rutinas.get(i).getEjercicios().get(i).getNombre()); 
+						}
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes iniciar sesion para usar esta función");
 				}

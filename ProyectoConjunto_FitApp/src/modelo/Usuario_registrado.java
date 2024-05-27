@@ -9,6 +9,7 @@ public class Usuario_registrado {
 	private String nombre;
 	private String usuario;
 	private String contraseña;
+	private ArrayList<Rutina> rutinas;
 
 	/**
 	 * Constructor de la clase Usuario_registrado
@@ -18,7 +19,7 @@ public class Usuario_registrado {
 	 * @param contraseña la contraseña de acceso del usuario
 	 * @param rutinas    las rutinas del usuario
 	 */
-	public Usuario_registrado(String nombre, String usuario, String contraseña) {
+	public Usuario_registrado(String nombre, String usuario, String contraseña, ArrayList<Rutina> rutinas) {
 		this.nombre = nombre;
 		this.usuario = usuario;
 		this.contraseña = contraseña;
@@ -77,7 +78,24 @@ public class Usuario_registrado {
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
 	}
+	
+	/**
+	 * Metodo que retorna las rutinas del usuario
+	 * @return una lista con las rutinas del usuario
+	 */
+	public ArrayList<Rutina> getRutinas() {
+		return rutinas;
+	}
+	
+	/**
+	 * Metodo que establece una rutina del usuario
+	 * 
+	 * @param rutinas la rutina a establecer
+	 */
 
+	public void setRutinas(ArrayList<Rutina> rutinas) {
+		this.rutinas = rutinas;
+	}
 
 	/**
 	 * Obtiene la lista de ejercicios de una rutina específica.

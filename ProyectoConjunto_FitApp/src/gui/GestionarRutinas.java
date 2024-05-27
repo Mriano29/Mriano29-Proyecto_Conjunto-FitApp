@@ -4,6 +4,7 @@ import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -14,45 +15,50 @@ import modelo.Rutina;
 public class GestionarRutinas extends EstructuraPanel {
 
 	private static final long serialVersionUID = 1L;
-	ArrayList<Integer> rutinas = new ArrayList<Integer>();
+	ArrayList<Rutina> rutinas;
 
-	public GestionarRutinas() {
-		contenido();
+	public GestionarRutinas(){
+		try {
+			contenido();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		contenidoFooter();
 	}
 
-	private void contenido() {
+	private void contenido() throws IOException {
 		List listaEjercicios = new List();
 		listaEjercicios.setBounds(10, 106, 460, 296);
 		add(listaEjercicios);
-		
+
 		JButton agregarRutina = new JButton("Agregar rutina");
 		agregarRutina.setBounds(40, 420, 192, 75);
 		add(agregarRutina);
-		
+
 		JButton eliminarRutina = new JButton("Eliminar rutina");
 		eliminarRutina.setBounds(40, 505, 192, 85);
 		add(eliminarRutina);
-		
+
 		JButton agregarEjercicio = new JButton("Agregar ejercicio");
 		agregarEjercicio.setBounds(242, 420, 192, 75);
 		add(agregarEjercicio);
-		
+
 		JButton eliminarEjercicio = new JButton("Eliminar ejercicio");
 		eliminarEjercicio.setBounds(242, 505, 192, 85);
 		add(eliminarEjercicio);
 		Gestor gestor = new Gestor() {
 		};
 		try {
-			rutinas = gestor.rutinas(EstadoSesion.getUsuario_activo().getUsuario());
-			if(rutinas.size() != 0) {
+			rutinas = EstadoSesion.getUsuario_activo().getRutinas();
+			if (rutinas.size() != 0) {
 				for (int i = 0; i < rutinas.size(); i++) {
-					listaEjercicios.add("Rutina " + (i + 1) + " ID: " + rutinas.get(i));
+					listaEjercicios.add("Rutina " + (i + 1));
 				}
-			}else {
+			} else {
 				listaEjercicios.add("No hay rutinas añadidas");
 			}
-		} catch (IOException e) {
+			gestor.desconectar();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

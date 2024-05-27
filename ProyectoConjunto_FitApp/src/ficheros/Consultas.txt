@@ -2,4 +2,5 @@ SELECT usuario FROM usuarios;
 SELECT usuario, contraseña FROM usuarios;
 SELECT ejercicios.nombre AS nombre_ejercicio, secciones.nombre AS nombre_seccion, musculos.nombre AS nombre_musculo from ejercicios JOIN secciones ON ejercicios.seccion = secciones.id JOIN musculos ON secciones.musculo = musculos.id;
 SELECT nombre, contraseña FROM usuarios WHERE usuario LIKE '#';
-SELECT rutinas.id AS id_rutina FROM rutinas JOIN usuarios ON rutinas.id_usuario = usuarios.id WHERE usuarios.usuario = ',';
+SELECT ejercicios.nombre AS nombre_ejercicio, secciones.nombre AS nombre_seccion, musculos.nombre AS nombre_musculo FROM ejercicios_rutina JOIN ejercicios ON ejercicios_rutina.Id_ejercicio = ejercicios.id JOIN secciones ON ejercicios.seccion = secciones.id JOIN musculos ON secciones.musculo = musculos.id WHERE ejercicios_rutina.id_rutina = '#';
+SELECT rutinas.id FROM rutinas JOIN usuarios ON rutinas.id_usuario = usuarios.id WHERE usuarios.usuario = ',';
