@@ -15,6 +15,9 @@ import javax.swing.JTextField;
 
 import modelo.Gestor;
 
+/**
+ * Clase gestionarDatos es una especializacion de EstructuraPanel
+ */
 public class GestionarDatos extends EstructuraPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -22,6 +25,9 @@ public class GestionarDatos extends EstructuraPanel {
 	private JTextField campoUsuario;
 	private JPasswordField campoClave;
 
+	/**
+	 * Constructor de la clase gestionar datos
+	 */
 	public GestionarDatos() {
 		cargarContenido();
 		cargarFunciones();
@@ -57,11 +63,13 @@ public class GestionarDatos extends EstructuraPanel {
 						} else {
 							Gestor gestor = new Gestor() {
 							};
-							if (gestor.cambiarContraseña(EstadoSesion.getUsuario_activo().getUsuario(), input.strip())) {
+							if (gestor.cambiarContraseña(EstadoSesion.getUsuario_activo().getUsuario(),
+									input.strip())) {
 								JOptionPane.showMessageDialog(null, "Se ha cambiado su clave con exito");
-								EstadoSesion.setUsuario_activo(gestor.seleccionarUsuario(EstadoSesion.getUsuario_activo().getUsuario()));
+								EstadoSesion.setUsuario_activo(
+										gestor.seleccionarUsuario(EstadoSesion.getUsuario_activo().getUsuario()));
 								campoClave.setText(EstadoSesion.getUsuario_activo().getContraseña());
-							}else {
+							} else {
 								JOptionPane.showMessageDialog(null, "Ha habido un error intentelo de nuevo");
 							}
 							gestor.desconectar();
@@ -103,7 +111,7 @@ public class GestionarDatos extends EstructuraPanel {
 								JOptionPane.showMessageDialog(null, "Se ha cambiado su usuario con exito");
 								EstadoSesion.setUsuario_activo(gestor.seleccionarUsuario(input.strip()));
 								campoUsuario.setText(EstadoSesion.getUsuario_activo().getUsuario());
-							}else {
+							} else {
 								JOptionPane.showMessageDialog(null, "Ha habido un error intentelo de nuevo");
 							}
 							gestor.desconectar();
@@ -143,9 +151,10 @@ public class GestionarDatos extends EstructuraPanel {
 							};
 							if (gestor.cambiarNombre(EstadoSesion.getUsuario_activo().getUsuario(), input.strip())) {
 								JOptionPane.showMessageDialog(null, "Se ha cambiado su nombre con exito");
-								EstadoSesion.setUsuario_activo(gestor.seleccionarUsuario(EstadoSesion.getUsuario_activo().getUsuario()));
+								EstadoSesion.setUsuario_activo(
+										gestor.seleccionarUsuario(EstadoSesion.getUsuario_activo().getUsuario()));
 								campoNombre.setText(EstadoSesion.getUsuario_activo().getNombre());
-							}else {
+							} else {
 								JOptionPane.showMessageDialog(null, "Ha habido un error intentelo de nuevo");
 							}
 							gestor.desconectar();

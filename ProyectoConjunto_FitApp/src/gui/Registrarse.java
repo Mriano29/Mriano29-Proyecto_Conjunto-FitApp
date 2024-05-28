@@ -14,6 +14,9 @@ import javax.swing.JTextField;
 
 import modelo.Gestor;
 
+/**
+ * Clase registrarse es una especializacion de EstructuraPanel
+ */
 public class Registrarse extends EstructuraPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -22,11 +25,14 @@ public class Registrarse extends EstructuraPanel {
 	private JPasswordField campoContraseña;
 	private JPasswordField campoConfirmacion;
 
+	/**
+	 * Constructor de la clase Registrarse
+	 */
 	public Registrarse() {
 		cargarContenido();
 		contenidoFooter();
 	}
-	
+
 	/**
 	 * Metodo que carga el contenido principal de la aplicacion
 	 */

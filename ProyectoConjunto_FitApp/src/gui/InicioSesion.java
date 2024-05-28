@@ -6,9 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import modelo.Gestor;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -37,7 +35,7 @@ public class InicioSesion extends EstructuraPanel {
 		cargarContenidoRegistro();
 		contenidoFooter();
 	}
-	
+
 	/**
 	 * Metodo que carga el contenido del footer
 	 */
@@ -121,6 +119,7 @@ public class InicioSesion extends EstructuraPanel {
 						if (gestor.comprobarUsuarioConClave(usuario, clave)) {
 							JOptionPane.showMessageDialog(null, "Bienvenido " + usuario + "!");
 							EstadoSesion.setUsuario_activo(gestor.seleccionarUsuario(usuario));
+							EstadoSesion.getUsuario_activo().setRutinas(gestor.rutinas(usuario));
 							EstadoSesion.setEstado(true);
 							ControlPaneles control = new ControlPaneles() {
 							};

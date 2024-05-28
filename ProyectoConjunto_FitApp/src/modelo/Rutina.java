@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Clase Rutina
  */
 public class Rutina {
+	private int ID;
 	private ArrayList<Ejercicio> ejercicios;
 
 	/**
@@ -13,9 +14,28 @@ public class Rutina {
 	 * 
 	 * @param ejercicios la lista de ejercicios de la rutina
 	 */
-	public Rutina(ArrayList<Ejercicio> ejercicios) {
+	public Rutina(int ID, ArrayList<Ejercicio> ejercicios) {
 		super();
+		this.ID = ID;
 		this.ejercicios = ejercicios;
+	}
+
+	/**
+	 * Metodo que retorna el ID de una rutina
+	 * 
+	 * @return el id de la rutina
+	 */
+	public int getID() {
+		return ID;
+	}
+
+	/**
+	 * Metodo que cambia el ID de una rutina
+	 * 
+	 * @param iD el nuevo ID de la rutina
+	 */
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 	/**

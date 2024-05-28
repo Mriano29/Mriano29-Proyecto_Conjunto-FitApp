@@ -12,16 +12,25 @@ import modelo.Ejercicio;
 import modelo.Gestor;
 import java.awt.List;
 
+/**
+ * Clase VerEjercicios es una especializacion de EstructuraPanel
+ */
 public class VerEjercicios extends EstructuraPanel {
 
 	private static final long serialVersionUID = 1L;
 	ArrayList<Ejercicio> ejercicios;
 
+	/**
+	 * Constructor de la clase VerEjercicios
+	 */
 	public VerEjercicios() {
 		contenido();
 		contenidoFooter();
 	}
 
+	/**
+	 * Metodo que inicializa el contenido principal del panel
+	 */
 	private void contenido() {
 		List listaEjercicios = new List();
 		listaEjercicios.setBounds(10, 106, 460, 296);
@@ -41,6 +50,9 @@ public class VerEjercicios extends EstructuraPanel {
 		}
 	}
 
+	/**
+	 * Metodo que carga el contenido del footer del panel
+	 */
 	private void contenidoFooter() {
 		JButton atras = new JButton("Volver");
 		atras.setBounds(10, 20, 90, 25);

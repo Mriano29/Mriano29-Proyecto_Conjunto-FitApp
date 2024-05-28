@@ -15,8 +15,12 @@ public class FitAppMain {
 		iniciar();
 	}
 
+	/**
+	 * Metodo que inicia la ventana de la aplicacion
+	 */
 	private static void iniciar() {
-		ControlPaneles control = new ControlPaneles() {};
+		ControlPaneles control = new ControlPaneles() {
+		};
 		control.mostrarVentana();
 	}
 }

@@ -199,7 +199,7 @@ public class Gestor {
 			if (datosUsuario.next()) {
 				String nombre = datosUsuario.getString("nombre");
 				String contraseña = datosUsuario.getString("contraseña");
-				Usuario_registrado resultado = new Usuario_registrado(nombre, usuario, contraseña, rutinas(usuario));
+				Usuario_registrado resultado = new Usuario_registrado(nombre, usuario, contraseña, null);
 				br.close();
 				fr.close();
 				return resultado;
@@ -313,7 +313,8 @@ public class Gestor {
 			ResultSet datosRutina = consulta1.executeQuery(sentencia);
 			while (datosRutina.next()) {
 				int idRutina = datosRutina.getInt("id");
-				Rutina rutina_nueva = new Rutina(ejercicios(idRutina));
+				ArrayList<Ejercicio> ejercicios_rutina = ejercicios(idRutina);
+				Rutina rutina_nueva = new Rutina(idRutina, ejercicios_rutina);
 				rutinas.add(rutina_nueva);
 			}
 		} catch (SQLException e) {
@@ -359,4 +360,53 @@ public class Gestor {
 		fr.close();
 		return resultado;
 	}
+
+	/**
+	 * Metodo que añade una rutina a un usuario
+	 * 
+	 * @param usuario el usuario al que se le añadira la rutina
+	 * @return true si se añadio, false en caso contrario
+	 * @throws IOException
+	 */
+	public boolean agregarRutina(String usuario) throws IOException {
+		FileReader fr = new FileReader("./src/ficheros/Inserciones.txt");
+		BufferedReader br = new BufferedReader(fr);
+		br.readLine();
+		String[] linea = br.readLine().split("#");
+		String sentencia = linea[0] + usuario + linea[1];
+		try {
+			boolean comprobacion = consulta.execute(sentencia);
+			if (comprobacion) {
+				br.close();
+				fr.close();
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return true;
+	}
+
+	public boolean eliminarRutina(int id) throws IOException {
+		FileReader fr = new FileReader("./src/ficheros/Borrado.txt");
+		BufferedReader br = new BufferedReader(fr);
+		String[] linea = br.readLine().split("#");
+		String sentencia = linea[0] + id + linea[1];
+		try {
+			boolean comprobacion = consulta.execute(sentencia);
+			if (comprobacion) {
+				br.close();
+				fr.close();
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return true;
+	}
+
 }

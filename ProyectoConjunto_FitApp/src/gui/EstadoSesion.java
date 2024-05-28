@@ -3,7 +3,8 @@ package gui;
 import modelo.Usuario_registrado;
 
 /**
- * Clase EstadoSesion indica si un usuario ha iniciado sesion o no a la interfaz
+ * Clase EstadoSesion controla el estado de la sesion y el usuario activo
+ * actualmente
  */
 public class EstadoSesion {
 	private static boolean estadoSesion = false;

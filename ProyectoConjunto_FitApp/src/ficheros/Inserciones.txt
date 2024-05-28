@@ -1,1 +1,2 @@
 INSERT INTO usuarios VALUES(,);
+INSERT INTO rutinas VALUES(NULL, (SELECT id FROM usuarios WHERE usuario LIKE '#'));
