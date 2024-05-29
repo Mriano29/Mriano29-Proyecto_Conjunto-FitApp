@@ -28,7 +28,8 @@ public class InicioSesion extends EstructuraPanel {
 	}
 
 	/**
-	 * Metodo que introduce el contenido en el panel principal
+	 * Metodo que introduce el contenido en el panel principal, contiene las
+	 * funciones de inicio de sesion
 	 */
 	private void cargarContenido() {
 		cargarContenidoInicioSesion();

@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * Clase Menu es una especializacion de EstructuraPanel
+ * Clase Menu es una especializacion de EstructuraPanel, menu principal de la
+ * aplicacion, contiene todas las funciones principales
  */
 public class Menu extends EstructuraPanel {
 	private static final long serialVersionUID = 1L;

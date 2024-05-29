@@ -21,6 +21,9 @@ public class Gestor {
 	private Connection conexion;
 	private Statement consulta;
 
+	/**
+	 * Constructor de la clase Gestor
+	 */
 	public Gestor() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -350,7 +353,7 @@ public class Gestor {
 				String nombre = ejercicios_rutina.getString("nombre_ejercicio");
 				String seccion = ejercicios_rutina.getString("nombre_seccion");
 				String musculo = ejercicios_rutina.getString("nombre_musculo");
-				Ejercicio ejercicio_nuevo = new Ejercicio(nombre, seccion, musculo);
+				Ejercicio ejercicio_nuevo = new Ejercicio(nombre, musculo, seccion);
 				resultado.add(ejercicio_nuevo);
 			}
 		} catch (SQLException e) {
@@ -389,6 +392,13 @@ public class Gestor {
 		return true;
 	}
 
+	/**
+	 * Metodo que elimina la rutina de un usuario
+	 * 
+	 * @param id el id de la rutina a eliminar
+	 * @return true si la elimino, false en caso contrario
+	 * @throws IOException
+	 */
 	public boolean eliminarRutina(int id) throws IOException {
 		FileReader fr = new FileReader("./src/ficheros/Borrado.txt");
 		BufferedReader br = new BufferedReader(fr);
@@ -409,4 +419,124 @@ public class Gestor {
 		return true;
 	}
 
+	/**
+	 * Metodo que añade un ejercicio a la rutina de un usuario
+	 * 
+	 * @param id        el id de la rutina a la que se añadira el ejercicio
+	 * @param ejercicio el ejercicio a añadir
+	 * @param musculo   el musculo del ejercicio a aladir
+	 * @return true si lo añadio, false en caso contrario
+	 * @throws IOException
+	 */
+	public boolean agregarEjercicio(int id, String ejercicio, String musculo) throws IOException {
+		FileReader fr = new FileReader("./src/ficheros/Inserciones.txt");
+		BufferedReader br = new BufferedReader(fr);
+		br.readLine();
+		br.readLine();
+		String[] linea = br.readLine().split("#");
+		String sentencia = linea[0] + id + linea[1] + musculo + linea[2] + ejercicio + linea[3];
+		try {
+			boolean comprobacion = consulta.execute(sentencia);
+			if (comprobacion) {
+				br.close();
+				fr.close();
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return true;
+	}
+
+	/**
+	 * Metodo que obtiene los musculos de la base de datos
+	 * 
+	 * @return una lista con los nombres de los musculos
+	 * @throws IOException
+	 */
+	public ArrayList<String> obtenerMusculos() throws IOException {
+		FileReader fr = new FileReader("./src/ficheros/Consultas.txt");
+		BufferedReader br = new BufferedReader(fr);
+		ArrayList<String> resultado = new ArrayList<String>();
+		for (int i = 0; i < 6; i++) {
+			br.readLine();
+		}
+		String sentencia = br.readLine();
+		try {
+			ResultSet musculosRegistrados = consulta.executeQuery(sentencia);
+			while (musculosRegistrados.next()) {
+				String musculo = musculosRegistrados.getString("nombre");
+				resultado.add(musculo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return resultado;
+	}
+
+	/**
+	 * Metodo que obtiene los ejercicios de un musculo en especifico
+	 * 
+	 * @param musculoSeleccionado el musculo a buscar
+	 * @return una lista con los ejercicios encontrados
+	 * @throws IOException
+	 */
+	public ArrayList<Ejercicio> obtenerEjerciciosPorMusculo(String musculoSeleccionado) throws IOException {
+		FileReader fr = new FileReader("./src/ficheros/Consultas.txt");
+		BufferedReader br = new BufferedReader(fr);
+		for (int i = 0; i < 7; i++) {
+			br.readLine();
+		}
+		String[] linea = br.readLine().split("#");
+		String sentencia = linea[0] + musculoSeleccionado + linea[1];
+		ArrayList<Ejercicio> resultado = new ArrayList<Ejercicio>();
+		try {
+			ResultSet ejerciciosRegistrados = consulta.executeQuery(sentencia);
+			while (ejerciciosRegistrados.next()) {
+				String nombreEjercicio = ejerciciosRegistrados.getString("nombre_ejercicio");
+				String seccion = ejerciciosRegistrados.getString("nombre_seccion");
+				String musculo = ejerciciosRegistrados.getString("nombre_musculo");
+				Ejercicio ejercicio = new Ejercicio(nombreEjercicio, musculo, seccion);
+				resultado.add(ejercicio);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return resultado;
+	}
+
+	/**
+	 * Metodo que elimina un ejercicio de una rutina
+	 * 
+	 * @param id              el id de la rutina
+	 * @param nombreEjercicio el nombre del ejercicio a eliminar
+	 * @return true si lo elimina false en caso contrario
+	 * @throws IOException
+	 */
+	public boolean eliminarEjercicio(int id, String nombreEjercicio) throws IOException {
+		FileReader fr = new FileReader("./src/ficheros/Borrado.txt");
+		BufferedReader br = new BufferedReader(fr);
+		br.readLine();
+		String[] linea = br.readLine().split("#");
+		String sentencia = linea[0] + nombreEjercicio + linea[1] + id + linea[2];
+		try {
+			boolean comprobacion = consulta.execute(sentencia);
+			if (comprobacion) {
+				br.close();
+				fr.close();
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		br.close();
+		fr.close();
+		return true;
+	}
 }

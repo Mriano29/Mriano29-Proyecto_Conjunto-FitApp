@@ -17,13 +17,14 @@ import modelo.Gestor;
 import modelo.Rutina;
 
 /**
- * Clase GestionarRutinas es una especializacion de EstructuraPanel
+ * Clase GestionarRutinas es una especializacion de EstructuraPanel, contiene
+ * los metodos para gestionar las rutinas del usuario
  */
 public class GestionarRutinas extends EstructuraPanel {
 
 	private static final long serialVersionUID = 1L;
 	ArrayList<Rutina> rutinas;
-	JList<String> listaEjercicios = new JList<>();
+	JList<String> listaRutinas = new JList<>();
 	JScrollPane scrollPane;
 
 	/**
@@ -44,13 +45,11 @@ public class GestionarRutinas extends EstructuraPanel {
 	 * @throws IOException
 	 */
 	private void contenido() throws IOException {
-		setLayout(null); // Usar layout nulo para coordenadas absolutas
 		cargarLista();
 		llenarLista();
 		botonAgregarRutina();
 		botonEliminarRutina();
-		botonAgregarEjercicio();
-		botonEliminarEjercicio();
+		botonGestionarEjerciciosRutina();
 	}
 
 	/**
@@ -59,23 +58,16 @@ public class GestionarRutinas extends EstructuraPanel {
 	private void llenarLista() {
 		SwingUtilities.invokeLater(() -> {
 			DefaultListModel<String> model = new DefaultListModel<>();
-			Gestor gestor = new Gestor() {
-			};
-			try {
-				rutinas = EstadoSesion.getUsuario_activo().getRutinas();
-				if (rutinas.size() != 0) {
-					for (int i = 0; i < rutinas.size(); i++) {
-						model.addElement("Rutina " + (i + 1));
-					}
-				} else {
-					model.addElement("No hay rutinas añadidas");
+			rutinas = EstadoSesion.getUsuario_activo().getRutinas();
+			if (rutinas.size() != 0 || rutinas == null) {
+				for (int i = 0; i < rutinas.size(); i++) {
+					model.addElement("Rutina " + (i + 1));
 				}
-
-				listaEjercicios.setModel(model); // Actualiza el modelo de la lista
-				gestor.desconectar();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			} else {
+				model.addElement("No hay rutinas añadidas");
 			}
+
+			listaRutinas.setModel(model); 
 		});
 	}
 
@@ -83,22 +75,29 @@ public class GestionarRutinas extends EstructuraPanel {
 	 * Metodo que carga la visualizacion de la lista y el scrollpane que la acompaña
 	 */
 	private void cargarLista() {
-		listaEjercicios.setBounds(10, 106, 460, 296);
-		scrollPane = new JScrollPane(listaEjercicios);
+		listaRutinas.setBounds(10, 106, 460, 296);
+		scrollPane = new JScrollPane(listaRutinas);
 		scrollPane.setBounds(10, 106, 460, 296);
 		add(scrollPane);
 	}
 
-	private void botonEliminarEjercicio() {
-		JButton eliminarEjercicio = new JButton("Eliminar ejercicio");
-		eliminarEjercicio.setBounds(242, 505, 192, 85);
+	private void botonGestionarEjerciciosRutina() {
+		JButton eliminarEjercicio = new JButton("Gestionar ejercicios");
+		eliminarEjercicio.setBounds(140, 505, 192, 85);
 		add(eliminarEjercicio);
-	}
-
-	private void botonAgregarEjercicio() {
-		JButton agregarEjercicio = new JButton("Agregar ejercicio");
-		agregarEjercicio.setBounds(242, 420, 192, 75);
-		add(agregarEjercicio);
+		eliminarEjercicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int posicion = listaRutinas.getSelectedIndex();
+				if (posicion != -1) {
+					ControlPaneles control = new ControlPaneles() {
+					};
+					GestionEjerciciosRutina menu = new GestionEjerciciosRutina(rutinas.get(posicion));
+					control.cambiarPagina(panelActual, menu);
+				} else {
+					JOptionPane.showMessageDialog(null, "Debes seleccionar una rutina para eliminar");
+				}
+			}
+		});
 	}
 
 	/**
@@ -106,16 +105,16 @@ public class GestionarRutinas extends EstructuraPanel {
 	 */
 	private void botonEliminarRutina() {
 		JButton eliminarRutina = new JButton("Eliminar rutina");
-		eliminarRutina.setBounds(40, 505, 192, 85);
+		eliminarRutina.setBounds(242, 415, 192, 85);
 		add(eliminarRutina);
 		eliminarRutina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int posicion = listaEjercicios.getSelectedIndex();
+				int posicion = listaRutinas.getSelectedIndex();
 				if (posicion != -1) {
 					Gestor gestor = new Gestor() {
 					};
 					try {
-						if (gestor.eliminarRutina(rutinas.get(listaEjercicios.getSelectedIndex()).getID())) {
+						if (gestor.eliminarRutina(rutinas.get(listaRutinas.getSelectedIndex()).getID())) {
 							EstadoSesion.getUsuario_activo()
 									.setRutinas(gestor.rutinas(EstadoSesion.getUsuario_activo().getUsuario()));
 							llenarLista();
@@ -124,6 +123,12 @@ public class GestionarRutinas extends EstructuraPanel {
 						}
 					} catch (IOException e1) {
 						e1.printStackTrace();
+					} finally {
+						try {
+							gestor.desconectar();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes seleccionar una rutina para eliminar");
@@ -137,7 +142,7 @@ public class GestionarRutinas extends EstructuraPanel {
 	 */
 	private void botonAgregarRutina() {
 		JButton agregarRutina = new JButton("Agregar rutina");
-		agregarRutina.setBounds(40, 420, 192, 75);
+		agregarRutina.setBounds(40, 415, 192, 85);
 		add(agregarRutina);
 		Gestor gestor = new Gestor() {
 		};
@@ -153,6 +158,12 @@ public class GestionarRutinas extends EstructuraPanel {
 					}
 				} catch (IOException b) {
 					b.printStackTrace();
+				} finally {
+					try {
+						gestor.desconectar();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});

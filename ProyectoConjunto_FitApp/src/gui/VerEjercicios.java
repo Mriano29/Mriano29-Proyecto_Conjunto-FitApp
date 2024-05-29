@@ -13,7 +13,8 @@ import modelo.Gestor;
 import java.awt.List;
 
 /**
- * Clase VerEjercicios es una especializacion de EstructuraPanel
+ * Clase VerEjercicios es una especializacion de EstructuraPanel, muestra todos
+ * los ejercicios en la base de datos
  */
 public class VerEjercicios extends EstructuraPanel {
 

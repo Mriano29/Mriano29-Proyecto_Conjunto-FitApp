@@ -12,6 +12,7 @@ public class Rutina {
 	/**
 	 * Constructor de la clase Rutina
 	 * 
+	 * @param iD el id de la rutina
 	 * @param ejercicios la lista de ejercicios de la rutina
 	 */
 	public Rutina(int ID, ArrayList<Ejercicio> ejercicios) {

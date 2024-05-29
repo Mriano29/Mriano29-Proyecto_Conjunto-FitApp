@@ -16,7 +16,8 @@ import javax.swing.JTextField;
 import modelo.Gestor;
 
 /**
- * Clase gestionarDatos es una especializacion de EstructuraPanel
+ * Clase gestionarDatos es una especializacion de EstructuraPanel, permite al
+ * usuario cambiar sus datos de inicio de sesion y nombre
  */
 public class GestionarDatos extends EstructuraPanel {
 

@@ -15,7 +15,8 @@ import javax.swing.JTextField;
 import modelo.Gestor;
 
 /**
- * Clase registrarse es una especializacion de EstructuraPanel
+ * Clase registrarse es una especializacion de EstructuraPanel, contiene las
+ * funciones de registro
  */
 public class Registrarse extends EstructuraPanel {
 

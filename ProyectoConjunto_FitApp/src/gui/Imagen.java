@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- * Clase imagen hereda de JPanel
+ * Clase imagen hereda de JPanel, usada para poner imagenes de fondo en paneles
  */
 public class Imagen extends JPanel {
 	private static final long serialVersionUID = 1L;
