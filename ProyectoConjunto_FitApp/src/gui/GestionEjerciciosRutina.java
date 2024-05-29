@@ -63,6 +63,7 @@ public class GestionEjerciciosRutina extends EstructuraPanel {
 
 	/**
 	 * control del boton que elimina los ejercicios
+	 * 
 	 * @param rutina la rutina donde se va a eliminar el ejercicio
 	 */
 	private void botonEliminarEjercicio(Rutina rutina) {
@@ -160,6 +161,7 @@ public class GestionEjerciciosRutina extends EstructuraPanel {
 
 	/**
 	 * Metodo que controla la funcion de agregar un ejercicio
+	 * 
 	 * @param rutina la rutina donde se va a agregar el ejercicio
 	 */
 	private void botonAgregarEjercicio(Rutina rutina) {
