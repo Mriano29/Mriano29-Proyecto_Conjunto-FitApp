@@ -1,0 +1,141 @@
+@startuml
+package gui {
+    class VentanaPrincipal extends JFrame {
+        - serialVersionUID: long
+
+        + VentanaPrincipal()
+        - crearVentana(): void
+    }
+
+    class EstructuraPanel extends JPanel {
+        - serialVersionUID: long
+        - header: JPanel
+        - footer: JPanel
+        - panelActual: JPanel
+
+        + EstructuraPanel()
+        - crearFooter(): void
+        - crearHeader(): void
+        - crearPanel(): void
+    }
+
+    class Menu extends EstructuraPanel {
+        - serialVersionUID: long
+
+        + Menu()
+        - cargarContenido(): void
+        - cargarImagen(): void
+        - cargarBotonGestionarDatos(): void
+        - cargarBotonGestionarRutinas(): void
+        - cargarBotonEjercicios(): void
+        - cargarContenidoHeader(): void
+        - cargarBotonInicioSesion(): void
+    }
+
+    class InicioSesion extends EstructuraPanel {
+        - serialVersionUID: long
+
+        + InicioSesion()
+        - cargarContenido(): void
+        - contenidoFooter(): void
+        - cargarContenidoRegistro(): void
+        - cargarContenidoInicioSesion(): void
+    }
+
+    class Registrarse extends EstructuraPanel {
+        - serialVersionUID: long
+        - campoNombre: JTextField
+        - campoUsuario: JTextField
+        - campoContraseña: JPasswordField
+        - campoConfirmacion: JPasswordField
+
+        + Registrarse()
+        - cargarContenido(): void
+        - contenidoFooter(): void
+        - cargarBotonEntrar(): void
+    }
+
+    class VerEjercicios extends EstructuraPanel {
+        - serialVersionUID: long
+        - ejercicios: ArrayList<Ejercicio>
+
+        + VerEjercicios()
+        - contenido(): void
+        - contenidoFooter(): void
+    }
+
+    class GestionarRutinas extends EstructuraPanel {
+        - serialVersionUID: long
+        - rutinas: ArrayList<Rutina>
+        - listaRutinas: JList<String>
+        - scrollPane: JScrollPane
+
+        + GestionarRutinas()
+        - contenido(): void
+        - llenarLista(): void
+        - cargarLista(): void
+        - botonGestionarEjerciciosRutina(): void
+        - botonEliminarRutina(): void
+        - botonAgregarRutina(): void
+        - contenidoFooter(): void
+    }
+
+    class GestionEjerciciosRutina extends EstructuraPanel {
+        - serialVersionUID: long
+        - ejercicios: ArrayList<Ejercicio>
+        - listaEjercicios: JList<String>
+        - scrollPane: JScrollPane
+        - comboEjercicios: JComboBox<String>
+        - comboMusculos: JComboBox<String
+        + GestionEjerciciosRutina(rutina: Rutina)
+        - contenido(rutina: Rutina): void
+        - cargarLista(): void
+        - cargarComboMusculos(): void
+        - cargarComboEjercicios(): void
+        - llenarLista(rutina: Rutina): void
+        - botonAgregarEjercicio(rutina: Rutina): void
+        - botonEliminarEjercicio(rutina: Rutina): void
+        - actualizarEjercicios(): void
+        - cargarLista(): void
+        - llenarLista(rutina: Rutina): void
+        - contenidoFooter(): void
+    }
+
+    class GestionarDatos extends EstructuraPanel {
+        - serialVersionUID: long
+        - campoNombre: JTextField
+        - campoUsuario: JTextField
+        - campoClave: JPasswordField
+
+        + GestionarDatos()
+        - cargarFunciones(): void
+        - cambiarClave(): void
+        - cambiarUsuario(): void
+        - cambiarNombre(): void
+        - confirmar(): boolean
+        - cargarContenido(): void
+        - contenidoFooter(): void
+    }
+
+    class ControlPaneles {
+        - panelActual: JPanel
+
+        + ControlPaneles()
+        + cambiarPagina(actual: JPanel, siguiente: JPanel): void
+    }
+
+    class EstadoSesion {
+        - usuario_activo: Usuario_registrado
+
+        + EstadoSesion()
+        + getUsuario_activo(): Usuario_registrado
+        + setUsuario_activo(usuario_activo: Usuario_registrado): void
+    }
+}
+ControlPaneles "1" --> "*" EstructuraPanel
+ControlPaneles "1" --> "1" JPanel
+VentanaPrincipal "1" --> "1" JPanel
+GestionarDatos "1" --> "1" EstadoSesion
+
+
+@enduml
